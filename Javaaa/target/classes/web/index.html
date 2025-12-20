@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Analytics | Premium Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Phosphor Icons for premium icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="ph ph-chart-polar"></i>
+                <span>Nexus<span class="highlight">Analytics</span></span>
+            </div>
+
+            <ul class="nav-links">
+                <li class="active" data-view="dashboard"><a href="#"><i class="ph ph-squares-four"></i> Dashboard</a>
+                </li>
+                <li data-view="customers"><a href="#"><i class="ph ph-users"></i> Customers</a></li>
+                <li data-view="performance"><a href="#"><i class="ph ph-chart-line-up"></i> Performance</a></li>
+                <li data-view="settings"><a href="#"><i class="ph ph-gear"></i> Settings</a></li>
+            </ul>
+
+            <div class="user-profile">
+                <div class="avatar">T</div>
+                <div class="user-info">
+                    <span class="name">Tejas</span>
+                    <span class="role">Admin</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header>
+                <h1 id="pageTitle">Dashboard Overview</h1>
+                <div class="date-display" id="currentDate">October 24, 2025</div>
+            </header>
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="dashboard-view" class="view-section">
+                <!-- KPI Cards -->
+                <div class="kpi-grid">
+                    <div class="kpi-card glass">
+                        <div class="icon-box blue"><i class="ph ph-users-three"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Customers</h3>
+                            <p id="totalCustomers">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass">
+                        <div class="icon-box purple"><i class="ph ph-currency-dollar"></i></div>
+                        <div class="kpi-info">
+                            <h3>Total Revenue</h3>
+                            <p id="totalRevenue">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass">
+                        <div class="icon-box green"><i class="ph ph-trend-up"></i></div>
+                        <div class="kpi-info">
+                            <h3>Avg. Visit Duration</h3>
+                            <p>12m 45s</p>
+                        </div>
+                    </div>
+                    <div class="kpi-card glass">
+                        <div class="icon-box orange"><i class="ph ph-star"></i></div>
+                        <div class="kpi-info">
+                            <h3>Satisfaction</h3>
+                            <p>4.9/5.0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-grid">
+                    <div class="chart-container glass">
+                        <h2><i class="ph ph-chart-bar"></i> Revenue Distribution</h2>
+                        <canvas id="revenueChart"></canvas>
+                    </div>
+                    <div class="chart-container glass">
+                        <h2><i class="ph ph-chart-pie-slice"></i> Customer Visits</h2>
+                        <canvas id="visitsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Data Table Preview -->
+                <div class="table-container glass">
+                    <div class="table-header">
+                        <h2>Recent Customer Activity</h2>
+                    </div>
+                    <div class="table-wrapper">
+                        <table id="customerTable">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Client Name</th>
+                                    <th>Email Status</th>
+                                    <th>Total Spend</th>
+                                    <th>Visits</th>
+                                    <th>Last Active</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data injected by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: CUSTOMERS -->
+            <div id="customers-view" class="view-section" style="display: none;">
+                <div class="glass" style="padding: 2rem;">
+                    <h2>All Customers Directory</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 2rem;">Manage your client base and view detailed
+                        profiles.</p>
+                    <div class="table-container">
+                        <!-- We will reuse the table populating logic or clone it -->
+                        <table id="fullCustomerTable" style="width: 100%;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Spend</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: PERFORMANCE -->
+            <div id="performance-view" class="view-section" style="display: none;">
+                <div class="charts-grid">
+                    <div class="chart-container glass">
+                        <h2><i class="ph ph-trend-up"></i> Traffic Trend (Last 30 Days)</h2>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <div class="chart-container glass">
+                        <h2><i class="ph ph-scatter-plot"></i> Spend vs. Loyalty</h2>
+                        <canvas id="scatterChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container glass" style="margin-top: 2rem;">
+                    <h2><i class="ph ph-thumbs-up"></i> Customer Satisfaction Indices</h2>
+                    <canvas id="polarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- VIEW: SETTINGS -->
+            <div id="settings-view" class="view-section" style="display: none;">
+                <div class="glass" style="padding: 2rem; max-width: 600px;">
+                    <h2>System Settings</h2>
+                    <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Dark Mode</span>
+                            <span class="status active">Enabled</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>Notifications</span>
+                            <span class="status inactive">Disabled</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span>API Status</span>
+                            <span class="status active">Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Background Gradients -->
+    <div class="bg-gradient-1"></div>
+    <div class="bg-gradient-2"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
